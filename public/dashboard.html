@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trash-Cart</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            overflow: hidden; /* Prevent scrollbars */
+            background-color: #f9fafb; /* Light gray background */
+        }
+        header {
+            background-color: #34d399; /* Green accent */
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            height: 10%; /* Dynamic height based on viewport */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for header */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        
+        }
+        .h-screen {
+            display: flex;
+            height: 90%; /* Remaining height for the content */
+        }
+        .menu {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px, rgba(0, 0, 0, 0.06) 0px 1px 2px;
+            width: 14rem;
+            height: 100%; /* Full height of the container */
+        }
+        .menu button, .menu a {
+            display: block;
+            color: rgb(2, 2, 2);
+            border: none;
+            padding: 12px 20px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            text-decoration: none;
+        }
+   
+        .flex-1 {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f9fafb;
+        }
+        .hero img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="lg-text">
+            Trash-Cart
+        </div>
+    
+    </header>
+    <div class="h-screen">
+        <!-- Menu pushed to the left -->
+        <div class="menu">
+            <a href="/profile">Profile</a>
+            <a href="/schedule">Schedule Pickup</a>
+            <a href="/prices">Prices</a>
+            <button>Logout</button>
+        </div>
+        <!-- Content -->
+        <div class="flex-1">
+            <div class="hero">
+                <img src="hero.png" alt="Hero Image">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedule Pickup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          document.getElementById('location').value = `Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`;
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+  </script>
+
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <div class="main min-h-screen flex items-center justify-center">
+    <div class="bg-white shadow-md rounded-lg p-8 w-full max-w-4xl"> <!-- Increased the width -->
+      <h1 class="text-2xl font-bold mb-6 text-center text-gray-700">Schedule a Pickup</h1>
+      <form action="/schedule-pickup" method="POST" class="space-y-6">
+        
+        <!-- Weight Selection -->
+        <div>
+          <label for="weight" class="block text-sm font-medium text-gray-700 mb-1">Select Weight</label>
+          <div class="space-x-4">
+            <input type="radio" id="20kg" name="weight" value="20kg" class="mr-2" required>
+            <label for="20kg" class="text-sm">20kg</label>
+
+            <input type="radio" id="20-50kg" name="weight" value="20-50kg" class="mr-2">
+            <label for="20-50kg" class="text-sm">20-50kg</label>
+
+            <input type="radio" id="50-100kg" name="weight" value="50-100kg" class="mr-2">
+            <label for="50-100kg" class="text-sm">50-100kg</label>
+
+            <input type="radio" id="100+" name="weight" value="100+" class="mr-2">
+            <label for="100+" class="text-sm">100+</label>
+          </div>
+        </div>
+
+        <!-- Date Selection -->
+        <div>
+          <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Pickup Date</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            required>
+        </div>
+
+        <!-- Time Selection -->
+        <div>
+          <label for="time" class="block text-sm font-medium text-gray-700 mb-1">Select Pickup Time</label>
+          <select
+            id="time"
+            name="time"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            required>
+            <option value="10am-3pm">10 AM - 3 PM</option>
+            <option value="3pm-7pm">3 PM - 7 PM</option>
+          </select>
+        </div>
+
+        <!-- Pickup Address -->
+        <div>
+          <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Pickup Address</label>
+          <textarea
+            id="address"
+            name="address"
+            rows="3"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            placeholder="Enter pickup address"
+            required></textarea>
+        </div>
+
+        <!-- Current Location Button -->
+        <div>
+          <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Current Location</label>
+          <div class="flex items-center space-x-2">
+            <input
+              id="location"
+              name="location"
+              type="text"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="Click to get your location"
+              readonly>
+            <button
+              type="button"
+              class="bg-green-400 text-white py-2 px-4 rounded-md hover:bg-green-700"
+              onclick="getLocation()">Get Location</button>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+          <button
+            type="submit"
+            class="w-full bg-green-400 text-white py-2 px-4 rounded-md">
+            Schedule Pickup
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
