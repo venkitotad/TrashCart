@@ -2,7 +2,7 @@ import express from 'express';
 import database from './db.js';
 import bodyParser from 'body-parser';
 import path from 'path';
-import { fileURLToPath } from 'url'; 
+import { fileURLToPath } from 'url';
 
 const port = 3000;
 const app = express();
@@ -27,7 +27,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Routes
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html')); 
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.get('/getStarted', (req, res) => {
@@ -64,35 +64,57 @@ app.post('/register', async (req, res) => {
 
 
 app.post('/login', async (req, res) => {
-    const {email, password} = req.body;
-    
-    try{
-      const result = await database.query('SELECT *FROM USERS WHERE email=$1 AND password=$2',
+  const { email, password } = req.body;
+
+  try {
+    const result = await database.query('SELECT *FROM USERS WHERE email=$1 AND password=$2',
       [email, password]
 
-      );
+    );
 
-      if((await result).rows.length > 0){
-        const userId = (await result).rows[0].id;
-        console.log('user found', userId);
-        res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
-      }
-      else{
-        res.status(401).send('Invalid credentials. Please try again.');
-
-      }
-    }catch(err){
-      res.status(500).send('Server error!.');
+    if ((await result).rows.length > 0) {
+      const userId = (await result).rows[0].id;
+      console.log('user found', userId);
+      res.sendFile(path.join(__dirname, 'public', 'dashboard.html'));
     }
+    else {
+      res.status(401).send(`<h3>Invalid credentials. Please try again.</h3>`);
+
+    }
+  } catch (err) {
+    res.status(500).send(`<h3>Server Error try again!.</h3>`);
+  }
 });
 
 
+app.post('/schedule-pickup', async (req, res) => {
+  try {
 
-app.get('/Schedule', (req, res) =>{
+    const { weight, date, time, address, location } = req.body;
+
+    const result = await database.query('INSERT INTO pickups(weight, date, time, address, location) VALUES ($1, $2, $3, $4, $5) RETURNING ID',
+
+      [weight, date, time, address, location]
+    );
+
+    const pickupID = result.rows[0].id;
+    console.log(`pickup id ${pickupID}`)
+
+    res.status(200).send(`<h3>Pickup shceduled successfully id: is ${pickupID}</h3>`);
+
+  } catch (err) {
+    console.log(`Error scheduling pickup`, err);
+    res.status(500).send(`<h3>Cannot schedule pickup!..please try again</h3>`);
+  }
+})
+
+
+
+app.get('/Schedule', (req, res) => {
   res.render('schedule-pickup')
 })
 
-app.get('/Prices', (req, res) =>{
+app.get('/Prices', (req, res) => {
   res.render('rates')
 })
 
